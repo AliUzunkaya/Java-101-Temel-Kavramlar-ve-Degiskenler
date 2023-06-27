@@ -1,0 +1,24 @@
+import java.util.Scanner;
+
+public class UcgenAlaniHesaplama {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Birinci kenar uzunluğunu girin: ");
+        double kenar1 = input.nextDouble();
+
+        System.out.print("Ikinci kenar uzunluğunu girin: ");
+        double kenar2 = input.nextDouble();
+
+        System.out.print("Üçüncü kenar uzunluğunu girin: ");
+        double kenar3 = input.nextDouble();
+
+        // Yarı çevreyi hesapla
+        double yariCevre = (kenar1 + kenar2 + kenar3) / 2;
+
+        // Alanı hesapla
+        double alan = Math.sqrt(yariCevre * (yariCevre - kenar1) * (yariCevre - kenar2) * (yariCevre - kenar3));
+
+        System.out.println("Üçgenin Alanı: " + alan);
+    }
+}
