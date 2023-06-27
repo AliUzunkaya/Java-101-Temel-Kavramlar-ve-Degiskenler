@@ -1,0 +1,25 @@
+import java.util.Scanner;
+
+public class Kdv {
+    public static void main(String[] args) {
+
+        Scanner input = new Scanner(System.in);
+        System.out.print("Ücret tutarını giriniz : ");
+        double tutar = input.nextDouble();
+
+        double kdvOran;
+        if (tutar > 0 && tutar <= 1000) {
+            kdvOran = 0.18;
+        } else {
+            kdvOran = 0.08;
+        }
+
+        double kdvtutar = tutar * kdvOran;
+        double kdvlitutar = tutar + kdvtutar;
+
+        System.out.println("kdvsiz tutar : " + tutar);
+        System.out.println("kdv oranı :" + kdvOran);
+        System.out.println("kdv tutarı :" + kdvtutar);
+        System.out.println("kdvli tutar : " + kdvlitutar );
+    }
+}
