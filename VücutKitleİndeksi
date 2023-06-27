@@ -1,0 +1,18 @@
+import java.util.Scanner;
+
+public class VucutKitleIndeksiHesaplama {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Boyunuzu (metre cinsinden) girin: ");
+        double boy = input.nextDouble();
+
+        System.out.print("Kilonuzu girin: ");
+        double kilo = input.nextDouble();
+
+        // Vücut Kitle İndeksi hesaplama
+        double vucutKitleIndeksi = kilo / (boy * boy);
+
+        System.out.println("Vücut Kitle İndeksi: " + vucutKitleIndeksi);
+    }
+}
