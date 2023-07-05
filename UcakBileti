@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class UcakBileti {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Mesafe (KM) değerini kullanıcıdan alın
+        System.out.print("Mesafe (KM): ");
+        int mesafe = scanner.nextInt();
+
+        // Yaş değerini kullanıcıdan alın
+        System.out.print("Yaşınız: ");
+        int yas = scanner.nextInt();
+
+        // Yolculuk tipini kullanıcıdan alın
+        System.out.print("Yolculuk Tipi (1-Tek Yön, 2-Gidiş Dönüş): ");
+        int yolculukTipi = scanner.nextInt();
+
+        // Veri girişi kontrolü yapın
+        if (mesafe <= 0 || yas <= 0 || (yolculukTipi != 1 && yolculukTipi != 2)) {
+            System.out.println("Hatalı Veri Girdiniz!");
+            return;
+        }
+
+        // Uçuşun toplam fiyatını hesaplayın
+        double fiyat = mesafe * 0.10;
+
+        // İndirimleri uygulayın
+        if (yas < 12) {
+            fiyat *= 0.5; // %50 indirim
+        } else if (yas >= 12 && yas <= 24) {
+            fiyat *= 0.9; // %10 indirim
+        } else if (yas > 65) {
+            fiyat *= 0.7; // %30 indirim
+        }
+
+        if (yolculukTipi == 2) {
+            fiyat *= 0.8*2; // %20 indirim
+        }
+
+        // Sonuçları ekrana yazdırın
+        System.out.println("Toplam Tutar: " + fiyat + " TL");
+    }
+}
