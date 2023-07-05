@@ -1,0 +1,19 @@
+import java.util.Scanner;
+
+public class CinZodyak {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Doğum yılınızı girin: ");
+        int dogumYili = scanner.nextInt();
+
+        String[] zodyakBurclari = {"Maymun", "Horoz", "Köpek", "Domuz", "Fare", "Öküz", "Tiger", "Tavşan", "Ejderha", "Yılan", "At", "Koyun"};
+
+        int indeks = dogumYili % 12;
+        String zodyakBurcu = zodyakBurclari[indeks];
+
+        System.out.println("Çin zodyağı burcunuz: " + zodyakBurcu);
+
+        scanner.close();
+    }
+}
