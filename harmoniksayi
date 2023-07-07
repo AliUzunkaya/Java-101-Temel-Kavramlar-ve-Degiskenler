@@ -1,0 +1,17 @@
+import java.util.Scanner;
+
+public class harmoniksayi {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Bir sayı girin: ");
+        int n = scanner.nextInt();
+
+        double harmonikSerisi = 0;
+
+        for (int i = 1; i <= n; i++) {
+            harmonikSerisi += (double) 1 / i;
+        }
+
+        System.out.println("Girilen sayının harmonik serisi: " + harmonikSerisi);
+    }
+}
