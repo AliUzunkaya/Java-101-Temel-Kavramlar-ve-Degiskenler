@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+public class elmasyapimi {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Bir sayı girin (tek sayı olmalı): ");
+        int n = scanner.nextInt();
+
+        if (n % 2 == 0) {
+            System.out.println("Hatalı giriş! Lütfen tek bir sayı girin.");
+            return;
+        }
+
+        int yildizSayisi = 1;
+        int boslukSayisi = n / 2;
+
+        // Üst kısım
+        for (int i = 0; i < n / 2 + 1; i++) {
+            for (int j = 0; j < boslukSayisi; j++) {
+                System.out.print(" ");
+            }
+
+            for (int j = 0; j < yildizSayisi; j++) {
+                System.out.print("*");
+            }
+
+            System.out.println();
+
+            boslukSayisi--;
+            yildizSayisi += 2;
+        }
+
+        // Alt kısım
+        yildizSayisi = n - 2;
+        boslukSayisi = 1;
+
+        for (int i = 0; i < n / 2; i++) {
+            for (int j = 0; j < boslukSayisi; j++) {
+                System.out.print(" ");
+            }
+
+            for (int j = 0; j < yildizSayisi; j++) {
+                System.out.print("*");
+            }
+
+            System.out.println();
+
+            boslukSayisi++;
+            yildizSayisi -= 2;
+        }
+    }
+}
