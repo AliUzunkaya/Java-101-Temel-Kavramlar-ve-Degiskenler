@@ -1,0 +1,23 @@
+import java.util.Scanner;
+
+public class DeseneMetot {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Bir sayı girin: ");
+        int n = scanner.nextInt();
+
+        DeseneMetot(n);
+    }
+
+    public static void DeseneMetot(int n) {
+        if (n <= 0) {
+            System.out.println(n);
+            return;
+        }
+
+        System.out.println(n);
+        DeseneMetot(n - 5);
+        System.out.println(n);
+    }
+}
