@@ -1,0 +1,32 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class ElemanFrekans {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 2, 4, 1, 3, 2, 4, 5, 2};
+
+        Map<Integer, Integer> frequencyMap = findElementFrequencies(arr);
+
+        // Frekansları ekrana yazdır
+        for (Map.Entry<Integer, Integer> entry : frequencyMap.entrySet()) {
+            System.out.println(entry.getKey() + " --> " + entry.getValue() + " kez tekrar edildi.");
+        }
+    }
+
+    public static Map<Integer, Integer> findElementFrequencies(int[] arr) {
+        Map<Integer, Integer> frequencyMap = new HashMap<>();
+
+        // Dizideki elemanları dolaşarak frekansları bul
+        for (int num : arr) {
+            if (frequencyMap.containsKey(num)) {
+                // Eleman zaten frekans map'inde varsa frekansını 1 artır
+                frequencyMap.put(num, frequencyMap.get(num) + 1);
+            } else {
+                // Eleman frekans map'inde yoksa 1 olarak ekle
+                frequencyMap.put(num, 1);
+            }
+        }
+
+        return frequencyMap;
+    }
+}
