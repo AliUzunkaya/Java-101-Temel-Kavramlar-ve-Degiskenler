@@ -1,0 +1,27 @@
+import java.util.Scanner;
+
+public class Palindromik {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Bir kelime girin: ");
+        String kelime = scanner.nextLine();
+
+        if (palindromikKontrol(kelime)) {
+            System.out.println("Bu kelime palindromiktir.");
+        } else {
+            System.out.println("Bu kelime palindromik değildir.");
+        }
+    }
+
+    public static boolean palindromikKontrol(String kelime) {
+        String temizKelime = kelime.toLowerCase().replace(" ", "");  // Küçük harfe dönüştürme ve boşlukları kaldırma
+        String tersKelime = new StringBuilder(temizKelime).reverse().toString();  // Kelimenin tersini almak
+
+        if (temizKelime.equals(tersKelime)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
