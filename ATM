@@ -1,0 +1,49 @@
+import java.util.Scanner;
+
+public class ATM {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Başlangıç bakiyesi
+        int bakiye = 1000;
+
+        while (true) {
+            // Menüyü göster
+            System.out.println("ATM'ye Hoş Geldiniz");
+            System.out.println("1. Bakiye Sorgula");
+            System.out.println("2. Para Yatırma");
+            System.out.println("3. Para Çekme");
+            System.out.println("4. Çıkış");
+            System.out.print("Lütfen bir seçenek girin: ");
+            int secim = scanner.nextInt();
+
+            switch (secim) {
+                case 1:
+                    System.out.println("Bakiyeniz: " + bakiye + " TL");
+                    break;
+                case 2:
+                    System.out.print("Yatırmak istediğiniz miktarı girin: ");
+                    int yatirilanMiktar = scanner.nextInt();
+                    bakiye += yatirilanMiktar;
+                    System.out.println(yatirilanMiktar + " TL yatırıldı. Yeni bakiyeniz: " + bakiye + " TL");
+                    break;
+                case 3:
+                    System.out.print("Çekmek istediğiniz miktarı girin: ");
+                    int cekilenMiktar = scanner.nextInt();
+                    if (cekilenMiktar <= bakiye) {
+                        bakiye -= cekilenMiktar;
+                        System.out.println(cekilenMiktar + " TL çekildi. Yeni bakiyeniz: " + bakiye + " TL");
+                    } else {
+                        System.out.println("Yetersiz bakiye. İşlem gerçekleştirilemedi.");
+                    }
+                    break;
+                case 4:
+                    System.out.println("İyi günler! Çıkış yapılıyor...");
+                    System.exit(0);
+                default:
+                    System.out.println("Geçersiz bir seçenek girdiniz. Lütfen tekrar deneyin.");
+            }
+            System.out.println();
+        }
+    }
+}
