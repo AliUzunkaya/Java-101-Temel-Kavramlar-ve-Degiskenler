@@ -1,0 +1,83 @@
+import java.util.*;
+
+// Bu metod, kitapları isimlerine göre A'dan Z'ye sıralar.
+class Book implements Comparable<Book> {
+    private String kitapAdi;
+    private int sayfaSayisi;
+    private String yazarAdi;
+    private String yayinTarihi;
+
+    public Book(String kitapAdi, int sayfaSayisi, String yazarAdi, String yayinTarihi) {
+        this.kitapAdi = kitapAdi;
+        this.sayfaSayisi = sayfaSayisi;
+        this.yazarAdi = yazarAdi;
+        this.yayinTarihi = yayinTarihi;
+    }
+
+    public String getKitapAdi() {
+        return kitapAdi;
+    }
+
+    public int getSayfaSayisi() {
+        return sayfaSayisi;
+    }
+
+    public String getYazarAdi() {
+        return yazarAdi;
+    }
+
+    public String getYayinTarihi() {
+        return yayinTarihi;
+    }
+
+    // compareTo metodu, kitapları isme göre A'dan Z'ye sıralamak için kullanılır.
+    @Override
+    public int compareTo(Book otherBook) {
+        return this.kitapAdi.compareTo(otherBook.getKitapAdi());
+    }
+
+    // toString metodu, kitap bilgilerini güzel bir şekilde döndürür.
+    @Override
+    public String toString() {
+        return "Kitap Adı: " + kitapAdi + ", Sayfa Sayısı: " + sayfaSayisi + ", Yazar Adı: " + yazarAdi + ", Yayın Tarihi: " + yayinTarihi;
+    }
+}
+
+public class MainBook {
+    public static void main(String[] args) {
+        // Book sınıfından 5 tane nesne oluşturuluyor.
+        Book kitap1 = new Book("Kitap E", 200, "Yazar A", "2022-01-01");
+        Book kitap2 = new Book("Kitap D", 150, "Yazar B", "2021-12-15");
+        Book kitap3 = new Book("Kitap C", 300, "Yazar C", "2023-03-20");
+        Book kitap4 = new Book("Kitap B", 180, "Yazar D", "2020-08-10");
+        Book kitap5 = new Book("Kitap A", 250, "Yazar E", "2022-06-05");
+
+        // Kitapları isme göre sıralamak için TreeSet kullanılıyor.
+        Set<Book> kitapSetiIsmeGore = new TreeSet<>();
+        kitapSetiIsmeGore.add(kitap1);
+        kitapSetiIsmeGore.add(kitap2);
+        kitapSetiIsmeGore.add(kitap3);
+        kitapSetiIsmeGore.add(kitap4);
+        kitapSetiIsmeGore.add(kitap5);
+
+        // İsimlere göre sıralanmış kitapları yazdırma
+        System.out.println("Kitaplar isme göre sıralı:");
+        for (Book kitap : kitapSetiIsmeGore) {
+            System.out.println(kitap);
+        }
+
+        // Kitapları sayfa sayısına göre sıralamak için TreeSet kullanılıyor ve bir Comparator kullanılıyor.
+        Set<Book> kitapSetiSayfaSayisinaGore = new TreeSet<>(Comparator.comparingInt(Book::getSayfaSayisi));
+        kitapSetiSayfaSayisinaGore.add(kitap1);
+        kitapSetiSayfaSayisinaGore.add(kitap2);
+        kitapSetiSayfaSayisinaGore.add(kitap3);
+        kitapSetiSayfaSayisinaGore.add(kitap4);
+        kitapSetiSayfaSayisinaGore.add(kitap5);
+
+        // Sayfa sayısına göre sıralanmış kitapları yazdırma
+        System.out.println("\nKitaplar sayfa sayısına göre sıralı:");
+        for (Book kitap : kitapSetiSayfaSayisinaGore) {
+            System.out.println(kitap);
+        }
+    }
+}
