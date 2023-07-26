@@ -1,0 +1,57 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+public class CiftDevreliFikstur {
+    private List<String> takimlar;
+
+    public CiftDevreliFikstur(List<String> takimlar) {
+        if (takimlar.size() != 5) {
+            throw new IllegalArgumentException("Takım sayısı 5 olmalı!");
+        }
+        this.takimlar = takimlar;
+    }
+
+    // Fikstürü oluşturur ve ekrana yazdırır.
+    public void fiksturOlustur() {
+        List<String> kopyaTakimlar = new ArrayList<>(takimlar);
+        int haftaSayisi = takimlar.size() - 1;
+
+        if (takimlar.size() % 2 == 1) {
+            String bayTakim = "BAY";
+            kopyaTakimlar.add(bayTakim);
+        }
+
+        for (int hafta = 1; hafta <= haftaSayisi * 2; hafta++) {
+            System.out.println("Hafta " + hafta + " Maçları:");
+            for (int i = 0; i < kopyaTakimlar.size() / 2; i++) {
+                String evSahibi = kopyaTakimlar.get(i);
+                String deplasman = kopyaTakimlar.get(kopyaTakimlar.size() - 1 - i);
+
+                if (evSahibi.equals("BAY") || deplasman.equals("BAY")) {
+                    String bayTakimAdi = evSahibi.equals("BAY") ? deplasman : evSahibi;
+                    System.out.println(bayTakimAdi + " (BAY GEÇTİ)");
+                } else {
+                    System.out.println(evSahibi + " vs " + deplasman);
+                }
+            }
+            System.out.println();
+            // Takımları haftalık yer değiştirme (Round-Robin algoritması).
+            String sonTakim = kopyaTakimlar.remove(kopyaTakimlar.size() - 1);
+            kopyaTakimlar.add(1, sonTakim);
+        }
+    }
+
+    public static void main(String[] args) {
+        List<String> takimlar = new ArrayList<>();
+        takimlar.add("MALATYASPOR");
+        takimlar.add("KONAKSPOR");
+        takimlar.add("BANAZISPOR");
+        takimlar.add("PAPAZSPOR");
+        takimlar.add("A17");
+
+        CiftDevreliFikstur fikstur = new CiftDevreliFikstur(takimlar);
+        fikstur.fiksturOlustur();
+    }
+}
