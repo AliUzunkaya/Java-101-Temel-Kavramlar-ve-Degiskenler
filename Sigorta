@@ -1,0 +1,217 @@
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
+import java.util.TreeSet;
+
+enum AuthenticationStatus {
+    SUCCESS, FAIL
+}
+
+class InvalidAuthenticationException extends Exception {
+    // Giriş işlemi başarısız olduğunda fırlatılacak özel hata sınıfı
+}
+
+interface Address {
+    // Address interface'i
+}
+
+class HomeAddress implements Address {
+    // HomeAddress class'ı Address interface'ini implement eden sınıf
+}
+
+class BusinessAddress implements Address {
+    // BusinessAddress class'ı Address interface'ini implement eden sınıf
+}
+
+class User {
+    String name;
+    String surname;
+    String email;
+    String password;
+    String profession;
+    int age;
+    ArrayList<Address> addresses = new ArrayList<>();
+    Date lastLoginDate;
+
+    // User sınıfı için yapıcı ve diğer metotlar
+}
+
+abstract class Account implements Comparable<Account> {
+    AuthenticationStatus authenticationStatus = AuthenticationStatus.FAIL;
+    User user;
+    ArrayList<Insurance> insurances = new ArrayList<>();
+
+    public void login(String email, String password) throws InvalidAuthenticationException {
+        if (user != null && user.email.equals(email) && user.password.equals(password)) {
+            authenticationStatus = AuthenticationStatus.SUCCESS;
+            user.lastLoginDate = new Date();
+        } else {
+            throw new InvalidAuthenticationException();
+        }
+    }
+
+    public void addAddress(Address address) {
+        if (user != null) {
+            user.addresses.add(address);
+        }
+    }
+
+    public void removeAddress(Address address) {
+        if (user != null) {
+            user.addresses.remove(address);
+        }
+    }
+
+    public boolean isLoggedIn() {
+        return authenticationStatus == AuthenticationStatus.SUCCESS;
+    }
+
+    public abstract void addInsurance(Insurance insurance);
+
+    @Override
+    public int compareTo(Account other) {
+        // Account nesnelerini email adresine göre sıralamak için compareTo metodu
+        return this.user.email.compareTo(other.user.email);
+    }
+
+    public void showUserInfo() {
+        System.out.println("Name: " + user.name);
+        System.out.println("Surname: " + user.surname);
+        System.out.println("Email: " + user.email);
+        System.out.println("Profession: " + user.profession);
+        System.out.println("Age: " + user.age);
+        System.out.println("Last Login Date: " + user.lastLoginDate);
+    }
+}
+
+class Individual extends Account {
+    @Override
+    public void addInsurance(Insurance insurance) {
+        // Burada Individual hesapları için sigorta ekleme işlemleri yapılır
+        insurances.add(insurance);
+    }
+}
+
+class Enterprise extends Account {
+    @Override
+    public void addInsurance(Insurance insurance) {
+        // Burada Enterprise hesapları için sigorta ekleme işlemleri yapılır
+        insurances.add(insurance);
+    }
+}
+
+abstract class Insurance {
+    String name;
+    double price;
+    Date startDate;
+    Date endDate;
+
+    public abstract double calculate();
+}
+
+class HealthInsurance extends Insurance {
+    @Override
+    public double calculate() {
+        // Sağlık sigortası priminin hesaplanması
+        return price * 0.05;
+    }
+}
+
+class ResidenceInsurance extends Insurance {
+    @Override
+    public double calculate() {
+        // Konut sigortası priminin hesaplanması
+        return price * 0.1;
+    }
+}
+
+class TravelInsurance extends Insurance {
+    @Override
+    public double calculate() {
+        // Seyahat sigortası priminin hesaplanması
+        return price * 0.07;
+    }
+}
+
+class CarInsurance extends Insurance {
+    @Override
+    public double calculate() {
+        // Araba sigortası priminin hesaplanması
+        return price * 0.08;
+    }
+}
+
+class AccountManager {
+    TreeSet<Account> accounts = new TreeSet<>();
+
+    public void addAccount(Account account) {
+        accounts.add(account);
+    }
+
+    public Account login(String email, String password) {
+        for (Account account : accounts) {
+            try {
+                account.login(email, password);
+                return account;
+            } catch (InvalidAuthenticationException e) {
+                // Hiçbir şey yapma, bir sonraki hesapla denemeye devam et
+            }
+        }
+        return null;
+    }
+}
+
+
+public class MainProject {
+    public static void main(String[] args) {
+        AccountManager accountManager = new AccountManager();
+
+        Individual individualAccount1 = new Individual();
+        individualAccount1.user = new User();
+        individualAccount1.user.name = "Ali";
+        individualAccount1.user.surname = "Yılmaz";
+        individualAccount1.user.email = "ali@example.com";
+        individualAccount1.user.password = "123456";
+        accountManager.addAccount(individualAccount1);
+
+        Enterprise enterpriseAccount1 = new Enterprise();
+        enterpriseAccount1.user = new User();
+        enterpriseAccount1.user.name = "XYZ Ltd.";
+        enterpriseAccount1.user.email = "xyz@example.com";
+        enterpriseAccount1.user.password = "xyz123";
+        accountManager.addAccount(enterpriseAccount1);
+
+        Scanner scanner;
+        scanner = new Scanner(System.in);
+        System.out.print("Enter your email: ");
+        String email = scanner.next();
+        System.out.print("Enter your password: ");
+        String password = scanner.next();
+
+        Account account = accountManager.login(email, password);
+        if (account != null && account.isLoggedIn()) {
+            System.out.println("Login successful!");
+            account.showUserInfo();
+
+            // Örnek olarak adres ekleme
+            Address homeAddress = new HomeAddress();
+            Address businessAddress = new BusinessAddress();
+            account.addAddress(homeAddress);
+            account.addAddress(businessAddress);
+
+            // Örnek olarak sigorta ekleme
+            Insurance healthInsurance = new HealthInsurance();
+            healthInsurance.name = "Health Insurance";
+            healthInsurance.price = 1000.0;
+            account.addInsurance(healthInsurance);
+
+            // Sigortaların hesaplanması ve fiyatlarının gösterilmesi
+            for (Insurance insurance : account.insurances) {
+                System.out.println(insurance.name + " price: " + insurance.calculate());
+            }
+        } else {
+            System.out.println("Login failed.");
+        }
+    }
+}
+
