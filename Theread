@@ -1,0 +1,85 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main17 {
+
+    public static void main(String[] args) throws InterruptedException {
+        // 1'den 10000 (10 bin)'e kadar olan sayılardan oluşan bir ArrayList oluşturunuz.
+        List<Integer> numbers = new ArrayList<>();
+        for (int i = 1; i <= 10000; i++) {
+            numbers.add(i);
+        }
+
+        // 4 eşit parçaya ayırınız
+        int partitionSize = numbers.size() / 4;
+        List<Integer> list1 = numbers.subList(0, partitionSize);
+        List<Integer> list2 = numbers.subList(partitionSize, 2 * partitionSize);
+        List<Integer> list3 = numbers.subList(2 * partitionSize, 3 * partitionSize);
+        List<Integer> list4 = numbers.subList(3 * partitionSize, numbers.size());
+
+        // 4 ayrı Thread tasarlayınız.
+        Thread thread1 = new Thread(new NumberProcessor(list1));
+        Thread thread2 = new Thread(new NumberProcessor(list2));
+        Thread thread3 = new Thread(new NumberProcessor(list3));
+        Thread thread4 = new Thread(new NumberProcessor(list4));
+
+        // Thread'leri başlatın.
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        thread4.start();
+
+        // Tüm Thread'lerin işini bitirmesini bekleyin.
+        thread1.join();
+        thread2.join();
+        thread3.join();
+        thread4.join();
+
+        // Tek ve çift sayıları tutan ArrayList'lerini alın.
+        List<Integer> oddNumbers = NumberProcessor.getOddNumbers();
+        List<Integer> evenNumbers = NumberProcessor.getEvenNumbers();
+
+        // Sonuçları yazdırın.
+        System.out.println("Tek Sayılar:");
+        System.out.println(oddNumbers);
+        System.out.println("Çift Sayılar:");
+        System.out.println(evenNumbers);
+    }
+}
+
+class NumberProcessor implements Runnable {
+    private List<Integer> numbers;
+    private static List<Integer> oddNumbers = new ArrayList<>();
+    private static List<Integer> evenNumbers = new ArrayList<>();
+
+    public NumberProcessor(List<Integer> numbers) {
+        this.numbers = numbers;
+    }
+
+    @Override
+    public void run() {
+        for (Integer number : numbers) {
+            if (number % 2 == 0) {
+                // Çift sayıları ekleyin
+                synchronized (evenNumbers) {
+                    evenNumbers.add(number);
+                }
+            } else {
+                // Tek sayıları ekleyin
+                synchronized (oddNumbers) {
+                    oddNumbers.add(number);
+                }
+            }
+        }
+    }
+
+    public static List<Integer> getOddNumbers() {
+        return oddNumbers;
+    }
+
+    public static List<Integer> getEvenNumbers() {
+        return evenNumbers;
+    }
+}
+
+
